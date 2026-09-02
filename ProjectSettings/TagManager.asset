@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - RGBA
+  - ColorSlider
+  - buttonPrueba
+  - buttonPedir
+  - inputMesa
+  - detalleMesa
+  - textDetalleM
+  - Part
+  - barImage
+  - textEspacio1Camarero
+  - camareroMesas
+  - espacio1Pedido
+  - espacio2Pedido
+  - espacio3Pedido
+  - espacio4Pedido
+  - espacio5Pedido
+  - espacio6Pedido
+  - managerCocina
+  - buttonAtender
+  - atenderConfirmado
+  - contentPedido
+  - contentCocina
+  - contentPagar
+  - pagarTotal
+  - amountText
+  - cuadroResetear
+  - dataBase
+  - textID
+  - PedidosRealizados
+  - AdvertenciaBorrarPlato
+  - "a\xF1adirPropina"
+  - nCocina
+  - method
+  - buttonMesa1
+  - TextIdTurno
+  - AtencionImage
+  - DialogoAlreadyAtendido
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - FacturaOnly
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

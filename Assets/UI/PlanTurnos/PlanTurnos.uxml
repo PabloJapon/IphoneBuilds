@@ -1,0 +1,122 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/PlanTurnos/PlanTurnos.uss?fileID=7433441132597879392&amp;guid=75059e246bc8d924f9ed4b8e3f09f0d0&amp;type=3#PlanTurnos"/>
+    <ui:VisualElement name="pt-app" class="pt-app">
+        <ui:Label text="Plan de turnos" name="pt-title" class="pt-title"/>
+        <ui:Label text="Organiza los turnos semanales de tu equipo por puesto y horario." name="pt-subtitle" class="pt-subtitle"/>
+        <ui:VisualElement name="pt-tab-semanal" class="pt-tab-panel">
+            <ui:VisualElement name="pt-toolbar" class="pt-toolbar">
+                <ui:VisualElement name="pt-navbox" class="pt-navbox">
+                    <ui:Button name="pt-btn-semana-prev" text="&lt;" class="pt-icon-btn"/>
+                    <ui:Label name="pt-semana-texto" text="semana" class="pt-semana-texto"/>
+                    <ui:Button name="pt-btn-semana-next" text="&gt;" class="pt-icon-btn"/>
+                    <ui:Button name="pt-btn-hoy" text="Esta semana" class="pt-btn-hoy"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="pt-acciones" class="pt-acciones">
+                    <ui:Button name="pt-btn-duplicar-semana" text="Duplicar semana anterior" class="pt-btn-secundario"/>
+                    <ui:Button name="pt-btn-nuevo-turno" text="+ Nuevo turno" class="pt-btn-primario"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="pt-clipboard-bar" class="pt-clipboard-bar">
+                <ui:Label text="Turno copiado" class="pt-clipboard-texto"/>
+                <ui:Label name="pt-clipboard-preview" text="" class="pt-clipboard-chip-preview"/>
+                <ui:Button name="pt-btn-cancelar-copia" text="Cerrar" class="pt-btn-cancelar-copia"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="pt-table-wrap" class="pt-table-wrap">
+                <ui:VisualElement name="pt-table" class="pt-table">
+                    <ui:VisualElement name="pt-table-head" class="pt-table-row pt-table-head">
+                        <ui:Label text="Empleado" class="pt-th pt-th-empleado"/>
+                        <ui:Label name="pt-th-0" text="Lun" class="pt-th"/>
+                        <ui:Label name="pt-th-1" text="Mar" class="pt-th"/>
+                        <ui:Label name="pt-th-2" text="Mie" class="pt-th"/>
+                        <ui:Label name="pt-th-3" text="Jue" class="pt-th"/>
+                        <ui:Label name="pt-th-4" text="Vie" class="pt-th"/>
+                        <ui:Label name="pt-th-5" text="Sab" class="pt-th"/>
+                        <ui:Label name="pt-th-6" text="Dom" class="pt-th"/>
+                    </ui:VisualElement>
+                    <ui:ScrollView name="pt-tabla-body-scroll" mode="Vertical" class="pt-tabla-body-scroll">
+                        <ui:VisualElement name="pt-tabla-body" class="pt-tabla-body"/>
+                    </ui:ScrollView>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+
+    <!-- ── Modal principal: nuevo / editar turno ── -->
+    <ui:VisualElement name="pt-modal-overlay" class="modal-overlay" style="display: none;">
+        <ui:VisualElement name="pt-modal-box" class="modal-box pt-modal-box-accent">
+            <ui:VisualElement name="pt-modal-header" class="modal-header">
+                <ui:VisualElement style="flex-grow: 1;">
+                    <ui:Label name="pt-modal-titulo" text="Nuevo turno" class="modal-header-title"/>
+                    <ui:Label name="pt-modal-subtitulo" text="" class="pt-modal-subtitulo"/>
+                </ui:VisualElement>
+                <ui:Button name="pt-modal-close" text="X" class="modal-close"/>
+            </ui:VisualElement>
+            <ui:ScrollView name="pt-modal-body" class="modal-body">
+                <ui:VisualElement name="campo-empleado-wrap" class="pt-campo">
+                    <ui:Label text="Empleado" class="pt-campo-label"/>
+                    <ui:DropdownField name="pt-campo-empleado"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="campo-plantilla-wrap" class="pt-campo">
+                    <ui:Label text="Plantilla opcional" class="pt-campo-label"/>
+                    <ui:VisualElement name="pt-fila-plantilla" class="pt-fila-dos">
+                        <ui:DropdownField name="pt-campo-plantilla"/>
+                        <ui:Button name="pt-btn-gestionar-plantillas" text="Gestionar" class="pt-btn-cancelar"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="campo-fecha-wrap" class="pt-campo">
+                    <ui:Label text="Fecha" class="pt-campo-label"/>
+                    <ui:Button name="pt-campo-fecha-btn" text="" class="hora-picker-btn"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="pt-fila-horas" class="pt-fila-dos">
+                    <ui:VisualElement name="campo-hora-inicio-wrap" class="pt-campo">
+                        <ui:Label text="Hora inicio" class="pt-campo-label"/>
+                        <ui:Button name="pt-campo-hora-inicio-btn" text="Elegir hora" class="hora-picker-btn"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="campo-hora-fin-wrap" class="pt-campo">
+                        <ui:Label text="Hora fin" class="pt-campo-label"/>
+                        <ui:Button name="pt-campo-hora-fin-btn" text="Elegir hora" class="hora-picker-btn"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="campo-puesto-wrap" class="pt-campo">
+                    <ui:Label text="Puesto" class="pt-campo-label"/>
+                    <ui:DropdownField name="pt-campo-puesto"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="campo-notas-wrap" class="pt-campo">
+                    <ui:Label text="Notas opcionales" class="pt-campo-label"/>
+                    <ui:TextField name="pt-campo-notas" multiline="true" class="pt-notas-field"/>
+                </ui:VisualElement>
+                <ui:Label name="pt-error" text="" class="pt-error"/>
+            </ui:ScrollView>
+            <ui:VisualElement name="pt-modal-footer" class="modal-footer">
+                <ui:Button name="pt-btn-eliminar" text="Eliminar turno" class="btn-eliminar"/>
+                <ui:VisualElement name="pt-footer-derecha" class="pt-footer-derecha">
+                    <ui:Button name="pt-btn-cancelar" text="Cancelar" class="btn-cancelar"/>
+                    <ui:Button name="pt-btn-guardar" text="Guardar" class="btn-guardar"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+
+    <!-- ── Selector de hora (reutilizado para Hora inicio y Hora fin) ── -->
+    <ui:VisualElement name="pt-hora-picker-overlay" class="modal-overlay" style="display: none;">
+        <ui:VisualElement class="modal-box hora-picker-box">
+            <ui:Label text="Selecciona una hora" class="modal-title"/>
+            <ui:ScrollView name="pt-hora-picker-scroll" class="hora-picker-scroll">
+                <ui:VisualElement name="pt-hora-picker-grid" class="hora-picker-grid"/>
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+
+    <!-- ── Selector de fecha ── -->
+    <ui:VisualElement name="pt-fecha-picker-overlay" class="modal-overlay" style="display: none;">
+        <ui:VisualElement class="modal-box date-picker-box">
+            <ui:VisualElement class="cal-cabecera">
+                <ui:Button name="pt-cal-mes-anterior" text="‹" class="pt-icon-btn"/>
+                <ui:Label name="pt-cal-mes-label" text="" class="cal-mes-label"/>
+                <ui:Button name="pt-cal-mes-siguiente" text="›" class="pt-icon-btn"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="pt-cal-dias-semana" class="cal-dias-semana"/>
+            <ui:VisualElement name="pt-cal-grid-fechas" class="cal-grid-fechas"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

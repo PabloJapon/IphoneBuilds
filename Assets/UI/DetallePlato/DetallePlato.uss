@@ -1,0 +1,254 @@
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 1100px;
+    max-height: 85%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 18px;
+    overflow: hidden;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Sin imagen: tarjeta mas estrecha, ya no hace falta el hueco de la izquierda */
+.card.no-image {
+    width: 640px;
+}
+
+.top-row {
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.image-container {
+    width: 320px;
+    height: 100%;
+    flex-shrink: 0;
+    background-color: rgb(230, 230, 230);
+}
+
+.card.no-image .image-container {
+    display: none;
+}
+
+.dish-image {
+    width: 100%;
+    height: 100%;
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+.content-scroll {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.content {
+    padding: 22px 44px 20px 24px; /* mas padding a la derecha: deja hueco fijo para la X */
+}
+
+.header-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.dish-name {
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: rgb(30, 30, 30);
+    white-space: normal;
+    flex-shrink: 1;
+}
+
+.dish-price {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(204, 90, 110);
+    margin-right: 28px;
+}
+
+.dish-description {
+    font-size: 22px;
+    color: rgb(110, 110, 110);
+    white-space: normal;
+    margin-bottom: 16px;
+    -unity-text-align: upper-left;
+}
+
+.section-title {
+    font-size: 16px;
+    -unity-font-style: bold;
+    color: rgb(90, 90, 90);
+    margin-top: 4px;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+
+.chip-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.chip {
+    background-color: rgb(240, 240, 240);
+    border-radius: 14px;
+    padding: 4px 12px;
+    margin-right: 8px;
+    margin-bottom: 0px;
+    font-size: 18px;
+    color: rgb(80, 80, 80);
+    -unity-text-align: middle-center;
+}
+
+/* Grupos de opciones en dos columnas cuando hay ancho disponible */
+.options-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.option-group {
+    flex-grow: 1;
+    flex-basis: 260px;
+    min-width: 400px;
+    margin-right: 28px;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+
+.option-group-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(230, 230, 230);
+    padding-bottom: 4px;   /* esto es el hueco entre el texto y la línea */
+    margin-bottom: 8px;    /* esto es el hueco entre la línea y la primera opción de debajo */
+}
+
+.option-group-title {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(30, 30, 30);
+}
+
+.badge {
+    font-size: 18px;
+    -unity-font-style: bold;
+    padding: 3px 8px;
+    border-radius: 12px;
+    -unity-text-align: middle-center;
+}
+
+.badge-obligatorio {
+    color: rgb(200, 55, 60);
+    background-color: rgb(252, 225, 226);
+}
+
+.badge-opcional {
+    color: rgb(120, 120, 120);
+    background-color: rgb(238, 238, 238);
+}
+
+.option-row {
+    flex-direction: row;
+    justify-content: flex-start;   /* antes: space-between */
+    align-items: center;
+    padding: 0px 0;
+}
+
+.option-name {
+    font-size: 22px;
+    color: rgb(40, 40, 40);
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.checkbox-toggle .unity-toggle__input {
+    margin-right: 2px;
+}
+
+.radio-toggle .unity-radio-button__input {
+    margin-right: 2px;
+}
+
+.option-extra {
+    font-size: 20px;
+    color: rgb(90, 90, 90);
+}
+
+.footer-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 20px;
+    border-top-width: 1px;
+    border-top-color: rgb(235, 235, 235);
+}
+
+.quantity-selector {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(240, 240, 240);
+    border-radius: 33px;
+    margin-right: 12px;
+    padding: 4px;
+}
+
+.qty-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 30px;
+    border-width: 0;
+    margin: 0;
+}
+
+.qty-label {
+    width: 28px;
+    -unity-text-align: middle-center;
+    font-size: 20px;
+}
+
+.add-button {
+    flex-grow: 1;
+    height: 60px;
+    border-radius: 22px;
+    background-color: rgb(204, 90, 110);
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+    -unity-font-style: bold;
+    border-width: 0;
+    margin: 0;
+}
+
+.add-button:disabled {
+    background-color: rgb(220, 190, 195);
+}
+
+.close-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-width: 0;
+    font-size: 18px;
+    padding: 0;
+}

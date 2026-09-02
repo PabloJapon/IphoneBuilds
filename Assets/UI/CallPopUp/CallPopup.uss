@@ -1,0 +1,119 @@
+.call-popup-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 30px;
+    display: none; /* el controlador C# lo activa/desactiva en runtime */
+}
+
+.call-popup-panel {
+    background-color: rgb(28, 28, 30);
+    border-radius: 16px;
+    padding: 18px 22px 14px 22px;
+    min-width: 340px;
+    border-left-width: 6px;
+    border-left-color: rgb(52, 199, 89); /* sobreescrito en runtime con el color de marca */
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+
+    /* Estado de entrada: desplazado y transparente */
+    opacity: 0;
+    translate: 40px 0;
+    transition-property: opacity, translate;
+    transition-duration: 0.25s, 0.25s;
+    transition-timing-function: ease-out, ease-out;
+}
+
+.call-popup-root.visible .call-popup-panel {
+    opacity: 1;
+    translate: 0 0;
+}
+
+.call-popup-header {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.call-popup-icon {
+    width: 36px;
+    height: 36px;
+    background-color: rgb(52, 199, 89); /* sobreescrito en runtime con el color de marca */
+    border-radius: 18px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.call-popup-text {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.call-popup-title {
+    color: rgb(190, 190, 195);
+    font-size: 13px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.call-popup-number {
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    -unity-font-style: bold;
+    white-space: normal;
+}
+
+.call-popup-queue-badge {
+    background-color: rgba(255, 255, 255, 0.14);
+    color: rgb(255, 255, 255);
+    font-size: 13px;
+    -unity-font-style: bold;
+    border-radius: 10px;
+    padding: 2px 8px;
+    -unity-text-align: middle-center;
+    margin-left: 8px;
+    display: none; /* el controlador C# lo muestra si hay llamadas en cola */
+}
+
+.call-popup-dismiss-btn {
+    align-self: flex-end;
+    background-color: rgb(52, 199, 89); /* sobreescrito en runtime con el color de marca */
+    color: rgb(255, 255, 255);
+    border-radius: 8px;
+    padding: 8px 22px;
+    border-width: 0;
+    font-size: 14px;
+    -unity-font-style: bold;
+    margin-bottom: 12px;
+}
+
+.call-popup-dismiss-btn:hover {
+    scale: 1.03 1.03;
+}
+
+.call-popup-progress-track {
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 0 -22px -14px -22px; /* estira la barra hasta los bordes de la tarjeta */
+}
+
+.call-popup-progress-fill {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(52, 199, 89); /* sobreescrito en runtime con el color de marca */
+}
+
+.call-popup-customer-name {
+    color: rgb(200, 200, 205);
+    font-size: 14px;
+    opacity: 0.75;
+    margin-top: 2px;
+}

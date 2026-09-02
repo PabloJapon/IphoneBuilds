@@ -1,0 +1,30 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" editor-extension-mode="False">
+    <Style src="PrinterSettingsUI.uss" />
+    <ui:VisualElement name="overlay" class="overlay">
+        <ui:VisualElement name="card" class="card">
+            <ui:VisualElement name="header-row" class="header-row">
+                <ui:Label text="Ajustes de impresora" name="title" class="title" />
+                <ui:Button name="btn-close" text="✕" class="close-button" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="content" class="content">
+                <ui:Label text="Selecciona el puerto serie al que está conectada la impresora de tickets." class="subtitle" />
+
+                <ui:VisualElement name="status-row" class="status-row">
+                    <ui:VisualElement name="status-dot" class="status-dot" />
+                    <ui:Label name="label-estado" text="Sin configurar" class="status-label" />
+                </ui:VisualElement>
+
+                <ui:VisualElement name="field-row" class="field-row">
+                    <ui:Label text="PUERTO" class="field-label" />
+                    <ui:DropdownField name="dropdown-puerto" class="dropdown" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="footer-row" class="footer-row">
+                <ui:Button name="btn-refrescar" text="⟳  Refrescar" class="btn btn-secondary" />
+                <ui:Button name="btn-guardar" text="Guardar" class="btn btn-primary" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

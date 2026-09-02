@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="CallPopup.uss" />
+    <ui:VisualElement name="call-popup-root" class="call-popup-root">
+        <ui:VisualElement name="call-popup-panel" class="call-popup-panel">
+            <ui:VisualElement name="call-popup-header" class="call-popup-header">
+                <ui:VisualElement name="call-popup-icon" class="call-popup-icon" />
+                <ui:VisualElement name="call-popup-text" class="call-popup-text">
+                    <ui:Label name="call-popup-title" text="Llamada entrante" class="call-popup-title" />
+                    <ui:Label name="call-popup-number" text="000 000 000" class="call-popup-number" />
+                    <ui:Label name="call-popup-customer-name" class="call-popup-customer-name" text="" />
+                </ui:VisualElement>
+                <ui:Label name="call-popup-queue-badge" text="+1" class="call-popup-queue-badge" />
+            </ui:VisualElement>
+            <ui:Button name="call-popup-dismiss" text="Aceptar" class="call-popup-dismiss-btn" />
+            <ui:VisualElement name="call-popup-progress-track" class="call-popup-progress-track">
+                <ui:VisualElement name="call-popup-progress-fill" class="call-popup-progress-fill" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

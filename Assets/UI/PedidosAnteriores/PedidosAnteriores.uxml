@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="PedidosAnteriores.uss"/>
+    <ui:VisualElement name="pedidos-view" class="pedidos-view">
+        <ui:VisualElement class="pedidos-header">
+            <ui:Label text="Pedidos anteriores" class="pedidos-title"/>
+            <ui:Button name="pedidos-close" text="✕" class="pedidos-close"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="pedidos-list-column">
+            <ui:ScrollView name="pedidos-scroll" class="pedidos-scroll"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="MiTurnoScreen.uss" />
+    <ui:VisualElement name="root" class="root">
+        <ui:VisualElement name="header" class="header">
+            <ui:VisualElement name="header-top-row" class="header-top-row">
+                <ui:Button name="back-button" text="‹" class="back-button"/>
+                <ui:Label name="header-title" text="Mi turno" class="header-title"/>
+                <ui:VisualElement name="header-spacer" class="header-spacer"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="week-nav-row" class="week-nav-row">
+                <ui:Button name="prev-week-button" text="‹" class="nav-arrow"/>
+                <ui:Label name="week-range-label" text="-- --- — -- ---" class="week-range-label"/>
+                <ui:Button name="next-week-button" text="›" class="nav-arrow"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:ScrollView name="day-list" class="day-list"/>
+        <ui:Label name="status-label" text="" class="status-label" style="display: none;"/>
+    </ui:VisualElement>
+</ui:UXML>

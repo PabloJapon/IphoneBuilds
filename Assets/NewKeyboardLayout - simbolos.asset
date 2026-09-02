@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ffde1bc5e28bc4ab98c14ca9deeae1, type: 3}
+  m_Name: NewKeyboardLayout - simbolos
+  m_EditorClassIdentifier: Assembly-CSharp::KeyboardLayoutData
+  layoutName: "Espa\xF1ol (QWERTY)"
+  rows:
+  - normalKeys:
+    - '!'
+    - '"'
+    - "\xB7"
+    - $
+    - '%'
+    - '&'
+    - /
+    - (
+    - )
+    - =
+    shiftKeys:
+    - '`'
+    - ^
+    - "\xA8"
+    - "\xB4"
+    - "\xB0"
+    - "\xAA"
+    - "\xBA"
+    - "\xA7"
+    - "\u2030"
+    - "\xA4"
+  - normalKeys:
+    - "\xBF"
+    - '?'
+    - "\xA1"
+    - +
+    - '-'
+    - '*'
+    - ':'
+    - ;
+    - _
+    - ~
+    shiftKeys:
+    - '['
+    - ']'
+    - '{'
+    - '}'
+    - <
+    - '>'
+    - '|'
+    - \
+    - "\u2039"
+    - "\u203A"
+  - normalKeys:
+    - '@'
+    - '#'
+    - "\u20AC"
+    - "\xA3"
+    - "\xAC"
+    - <
+    - '>'
+    shiftKeys:
+    - "\xAB"
+    - "\xBB"
+    - "\u201E"
+    - '"'
+    - ''''
+    - "\xB5"
+    - "\xB1"
