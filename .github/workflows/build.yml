@@ -44,12 +44,23 @@ jobs:
           PROJECT_PATH=$(find extracted -name "*.xcodeproj" | head -n 1)
           PROJECT_DIR=$(dirname "$PROJECT_PATH")
           cd "$PROJECT_DIR"
+
+          fastlane run update_code_signing_settings \
+            path:"$(basename "$PROJECT_PATH")" \
+            use_automatic_signing:false \
+            team_id:"MB3DD5P92N" \
+            code_sign_identity:"Apple Distribution" \
+            targets:"Unity-iPhone"
+
+          fastlane run update_project_provisioning \
+            xcodeproj:"$(basename "$PROJECT_PATH")" \
+            profile:"$HOME/Library/MobileDevice/Provisioning Profiles/profile.mobileprovision" \
+            target_filter:"^Unity-iPhone$" \
+            build_configuration:"Release" \
+            code_signing_identity:"Apple Distribution"
+
           xcodebuild -project "$(basename "$PROJECT_PATH")" -scheme Unity-iPhone \
             -configuration Release -archivePath "$GITHUB_WORKSPACE/App.xcarchive" \
-            CODE_SIGN_STYLE=Manual \
-            DEVELOPMENT_TEAM=MB3DD5P92N \
-            PROVISIONING_PROFILE_SPECIFIER=Gastrali_AppStore \
-            CODE_SIGN_IDENTITY="Apple Distribution" \
             archive
 
       - name: Export IPA
