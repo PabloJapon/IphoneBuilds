@@ -9,7 +9,8 @@ jobs:
         run: |
           curl -L -o build.zip https://github.com/PabloJapon/IphoneBuilds/releases/download/v1/Apple.zip
           unzip -q build.zip -d extracted
-          find extracted -name "*.xcodeproj"
+          echo "Contenido extraído:"
+          find extracted -maxdepth 3
 
       - name: Write API key
         run: |
@@ -18,26 +19,28 @@ jobs:
 
       - name: Archive with automatic signing
         run: |
-          cd extracted/Unity-iPhone
-          xcodebuild -project Unity-iPhone.xcodeproj -scheme Unity-iPhone \
-            -configuration Release -archivePath App.xcarchive \
+          PROJECT_PATH=$(find extracted -name "*.xcodeproj" | head -n 1)
+          PROJECT_DIR=$(dirname "$PROJECT_PATH")
+          echo "Usando proyecto: $PROJECT_PATH"
+          cd "$PROJECT_DIR"
+          xcodebuild -project "$(basename "$PROJECT_PATH")" -scheme Unity-iPhone \
+            -configuration Release -archivePath "$GITHUB_WORKSPACE/App.xcarchive" \
             -allowProvisioningUpdates \
             -authenticationKeyPath ~/private_keys/AuthKey_${{ secrets.ASC_KEY_ID }}.p8 \
             -authenticationKeyID "${{ secrets.ASC_KEY_ID }}" \
             -authenticationKeyIssuerID "${{ secrets.ASC_ISSUER_ID }}" \
-            DEVELOPMENT_TEAM=MB3DD5P92N \
+            DEVELOPMENT_TEAM=TU_APPLE_TEAM_ID \
             archive
 
       - name: Export IPA
         run: |
-          cd extracted/Unity-iPhone
           cat > exportOptions.plist << 'EOF'
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0"><dict>
             <key>method</key><string>app-store</string>
             <key>signingStyle</key><string>automatic</string>
-            <key>teamID</key><string>MB3DD5P92N</string>
+            <key>teamID</key><string>TU_APPLE_TEAM_ID</string>
           </dict></plist>
           EOF
           xcodebuild -exportArchive -archivePath App.xcarchive -exportPath export \
@@ -49,5 +52,5 @@ jobs:
 
       - name: Upload to App Store
         run: |
-          xcrun altool --upload-app -f extracted/Unity-iPhone/export/*.ipa -t ios \
+          xcrun altool --upload-app -f export/*.ipa -t ios \
             --apiKey "${{ secrets.ASC_KEY_ID }}" --apiIssuer "${{ secrets.ASC_ISSUER_ID }}"
