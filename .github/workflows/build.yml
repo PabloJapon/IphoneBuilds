@@ -29,7 +29,7 @@ jobs:
             -authenticationKeyPath ~/private_keys/AuthKey_${{ secrets.ASC_KEY_ID }}.p8 \
             -authenticationKeyID "${{ secrets.ASC_KEY_ID }}" \
             -authenticationKeyIssuerID "${{ secrets.ASC_ISSUER_ID }}" \
-            DEVELOPMENT_TEAM=TU_APPLE_TEAM_ID \
+            DEVELOPMENT_TEAM=MB3DD5P92N \
             archive
 
       - name: Export IPA
@@ -40,7 +40,7 @@ jobs:
           <plist version="1.0"><dict>
             <key>method</key><string>app-store</string>
             <key>signingStyle</key><string>automatic</string>
-            <key>teamID</key><string>TU_APPLE_TEAM_ID</string>
+            <key>teamID</key><string>MB3DD5P92N</string>
           </dict></plist>
           EOF
           xcodebuild -exportArchive -archivePath App.xcarchive -exportPath export \
