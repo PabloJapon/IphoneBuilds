@@ -36,6 +36,7 @@ jobs:
             -configuration Release -archivePath "$GITHUB_WORKSPACE/App.xcarchive" \
             DEVELOPMENT_TEAM=MB3DD5P92N \
             CODE_SIGN_STYLE=Automatic \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
             -allowProvisioningUpdates \
             -authenticationKeyPath "$HOME/private_keys/AuthKey_${KEY_ID}.p8" \
             -authenticationKeyID "$KEY_ID" \
