@@ -21,7 +21,7 @@ jobs:
           echo "Longitud ISSUER_ID: ${#ISSUER_ID}"
           echo "Longitud KEY_P8: ${#KEY_P8}"
           mkdir -p ~/private_keys
-          echo "$KEY_P8" | base64 --decode > ~/private_keys/AuthKey_${KEY_ID}.p8
+          echo "$KEY_P8" > ~/private_keys/AuthKey_${KEY_ID}.p8
           echo "$KEY_ID" > /tmp/key_id.txt
           echo "$ISSUER_ID" > /tmp/issuer_id.txt
 
