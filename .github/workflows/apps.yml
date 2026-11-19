@@ -43,6 +43,8 @@ jobs:
           unzip -q build.zip -d extracted
           # Zips made on Windows lose the executable bit of Unity's build-phase scripts.
           find extracted -name "*.sh" -exec chmod +x {} +
+          # Same for the extensionless IL2CPP tools Xcode runs at build time (il2cpp, UnityLinker, il2cpp-compile...).
+          find extracted -path "*/IL2CPP/build/deploy*" -type f -exec chmod +x {} +
 
       - name: Build certificate from raw key and cer
         env:
@@ -98,6 +100,13 @@ jobs:
           # HTTPS only = exempt encryption, skips the export-compliance question per build:
           # https://developer.apple.com/documentation/bundleresources/information-property-list/itsappusesnonexemptencryption
           /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" Info.plist || true
+          # Unique build number per upload (re-runs of the same zip too): <Unity build number>.<run>.<attempt>,
+          # max 3 integers, grows with each new zip and each run:
+          # https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundleversion
+          UNITY_NUM=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' Info.plist | cut -d. -f1)
+          BUILD_NUM="${UNITY_NUM:-1}.${{ github.run_number }}.${{ github.run_attempt }}"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUM" Info.plist
+          echo "CFBundleShortVersionString $(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Info.plist), CFBundleVersion $BUILD_NUM"
           ID=$(xcodebuild -project "$(basename "$PROJECT_PATH")" -target Unity-iPhone -showBuildSettings | awk '/ PRODUCT_BUNDLE_IDENTIFIER =/ {print $3; exit}')
           echo "Xcode bundle id: $ID"
           if [ "$ID" != "$BUNDLE" ]; then echo "Zip is not the ${{ inputs.app }} app ($ID != $BUNDLE)"; exit 1; fi
