@@ -6,16 +6,18 @@
 #   PROFILE_BASE64 (Gastrali, com.Gastrali.Gastrali), PROFILE_TPV_BASE64 (com.gastrali.tpv), PROFILE_COCINA_BASE64 (com.gastrali.cocina).
 # Verify at first CI run: profile name read from the profile, chmod of the Unity scripts, icon without alpha, altool upload.
 name: Build and Upload iOS app
+# Plain "Run workflow" (no choice) builds and uploads BOTH tpv and cocina, one independent job each.
 on:
   workflow_dispatch:
     inputs:
       app:
-        description: 'App to build'
+        description: 'App to build (both = tpv + cocina)'
         type: choice
-        options: [tpv, cocina, gastrali]
-        default: tpv
+        options: [both, tpv, cocina, gastrali]
+        default: both
       release_tag:
         description: 'Release of this repo that holds <App>-ios.zip'
+        type: string
         default: apps
 
 permissions:
@@ -23,23 +25,31 @@ permissions:
 
 jobs:
   build:
+    name: ${{ matrix.app }}
     runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Empty or 'both' = tpv + cocina; otherwise only the chosen app.
+        app: ${{ fromJSON((inputs.app == '' || inputs.app == 'both') && '["tpv","cocina"]' || format('["{0}"]', inputs.app)) }}
     env:
       TEAM_ID: MB3DD5P92N
+      RELEASE_TAG: ${{ inputs.release_tag || 'apps' }}
     steps:
       - name: Pick app
         run: |
-          case "${{ inputs.app }}" in
+          case "${{ matrix.app }}" in
             tpv)      echo "ZIP=TPV-ios.zip"      >> $GITHUB_ENV; echo "BUNDLE=com.gastrali.tpv"      >> $GITHUB_ENV ;;
             cocina)   echo "ZIP=Cocina-ios.zip"   >> $GITHUB_ENV; echo "BUNDLE=com.gastrali.cocina"   >> $GITHUB_ENV ;;
             gastrali) echo "ZIP=Gastrali-ios.zip" >> $GITHUB_ENV; echo "BUNDLE=com.Gastrali.Gastrali" >> $GITHUB_ENV ;;
+            *)        echo "Unknown app ${{ matrix.app }}"; exit 1 ;;
           esac
 
       - name: Download exported Xcode project
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release download "${{ inputs.release_tag }}" -R "$GITHUB_REPOSITORY" -p "$ZIP" -O build.zip
+          gh release download "$RELEASE_TAG" -R "$GITHUB_REPOSITORY" -p "$ZIP" -O build.zip
           unzip -q build.zip -d extracted
           # Zips made on Windows lose the executable bit of Unity's build-phase scripts.
           find extracted -name "*.sh" -exec chmod +x {} +
@@ -77,10 +87,10 @@ jobs:
           P_COCINA: ${{ secrets.PROFILE_COCINA_BASE64 }}
           P_GASTRALI: ${{ secrets.PROFILE_BASE64 }}
         run: |
-          case "${{ inputs.app }}" in
+          case "${{ matrix.app }}" in
             tpv) P="$P_TPV" ;; cocina) P="$P_COCINA" ;; gastrali) P="$P_GASTRALI" ;;
           esac
-          if [ -z "$P" ]; then echo "Missing provisioning profile secret for ${{ inputs.app }}"; exit 1; fi
+          if [ -z "$P" ]; then echo "Missing provisioning profile secret for ${{ matrix.app }}"; exit 1; fi
           echo "$P" | base64 --decode > profile.mobileprovision
           security cms -D -i profile.mobileprovision > profile.plist
           NAME=$(/usr/libexec/PlistBuddy -c 'Print :Name' profile.plist)
@@ -109,7 +119,7 @@ jobs:
           echo "CFBundleShortVersionString $(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Info.plist), CFBundleVersion $BUILD_NUM"
           ID=$(xcodebuild -project "$(basename "$PROJECT_PATH")" -target Unity-iPhone -showBuildSettings | awk '/ PRODUCT_BUNDLE_IDENTIFIER =/ {print $3; exit}')
           echo "Xcode bundle id: $ID"
-          if [ "$ID" != "$BUNDLE" ]; then echo "Zip is not the ${{ inputs.app }} app ($ID != $BUNDLE)"; exit 1; fi
+          if [ "$ID" != "$BUNDLE" ]; then echo "Zip is not the ${{ matrix.app }} app ($ID != $BUNDLE)"; exit 1; fi
 
           fastlane run update_code_signing_settings \
             path:"$(basename "$PROJECT_PATH")" \
